@@ -198,7 +198,13 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
             txtMaCD.requestFocus();
             return;
         }
-        cd.setMaCD(txtMaCD.getText());
+        if (txtMaCD.getText().trim().length() > 5) {
+            JOptionPane.showMessageDialog(this, "Ma CD <=5 ky tu");
+            txtMaCD.setText("");
+            txtMaCD.requestFocus();
+            return;
+        }
+        cd.setMaCD(txtMaCD.getText().trim());
         if (daoCD.loadDataID(cd).size() == 0) {
             JOptionPane.showMessageDialog(this, "Mã chuyên đề không tồn tại");
             txtMaCD.setText("");
@@ -227,9 +233,9 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
         loadDataToTable();
         JOptionPane.showMessageDialog(this, "Thêm thành công");
     }
-    
+
     //Phương thức làm mới form 
-    void resetFrm(){
+    void resetFrm() {
         txtMaCD.setText("");
         txtTenCD.setText("");
         txtThoiLuong.setText("");
@@ -276,6 +282,60 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
             os.close();
         }
         tgFile = "";
+    }
+
+    //Phuong thuc xoa CD
+    void deleteCD() {
+        if (txtMaCD.getText().trim().matches("\\s*")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã chuyên đề");
+            txtMaCD.setText("");
+            txtMaCD.requestFocus();
+            return;
+        }
+        cd.setMaCD(txtMaCD.getText());
+        if (daoCD.loadDataID(cd).size() == 0) {
+            JOptionPane.showMessageDialog(this, "Mã chuyên đề không tồn tại");
+            txtMaCD.setText("");
+            txtMaCD.requestFocus();
+            return;
+        }
+        daoCD.deleteCSDL(txtMaCD.getText().trim());
+        JOptionPane.showMessageDialog(this, "Delete Successfully!");
+        loadDataToTable();
+    }
+
+    //Phương thức next
+    void nextNH() {
+        if (ind < dsCD.size() - 1) {
+            ind++;
+            fillTable();
+        } else {
+            ind = dsCD.size() - 1;
+            JOptionPane.showMessageDialog(this, "Next!");
+        }
+    }
+
+    //Phương thức Prev
+    void prevNH() {
+        if (ind > 0) {
+            ind--;
+            fillTable();
+        } else {
+            ind = 0;
+            JOptionPane.showMessageDialog(this, "Prev!");
+        }
+    }
+
+    //Phương thức Last
+    void lastNH() {
+        ind = dsCD.size() - 1;
+        fillTable();
+    }
+
+    //Phương thức First
+    void firstNH() {
+        ind = 0;
+        fillTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -409,6 +469,11 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
         pnlCN.add(btnXoa);
         btnXoa.setBounds(293, 456, 90, 35);
 
@@ -424,21 +489,41 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
 
         btnLast.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
         pnlCN.add(btnLast);
         btnLast.setBounds(1122, 456, 55, 35);
 
         btnNext.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
         pnlCN.add(btnNext);
         btnNext.setBounds(1049, 456, 55, 35);
 
         btnPrev.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPrev.setText("<<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
         pnlCN.add(btnPrev);
         btnPrev.setBounds(976, 456, 55, 35);
 
         btnFirst.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnFirst.setText("|<");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
         pnlCN.add(btnFirst);
         btnFirst.setBounds(903, 456, 55, 35);
 
@@ -536,6 +621,26 @@ public class IfrmQLChuyenDe extends javax.swing.JInternalFrame {
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
         resetFrm();
     }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        deleteCD();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        firstNH();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        prevNH();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        nextNH();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        lastNH();
+    }//GEN-LAST:event_btnLastActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

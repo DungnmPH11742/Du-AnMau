@@ -13,22 +13,31 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
 
     @Override
     public void insertCSDL(NhanVien entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbc.pstmHelper("Insert into NHANVIEN values (?, ?, ?, ?)", entity.getMaNV(), entity.getMatKhau(), entity.getHoTen(), entity.isVaiTro());
     }
 
     @Override
     public void updateCSDL(NhanVien entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbc.pstmHelper("Update NhanVien set matKhau = ?, hoTen = ?, vaiTro = ? where maNV = ?", entity.getMatKhau(), entity.getHoTen(), entity.isVaiTro(), entity.getMaNV());
     }
 
     @Override
     public void deleteCSDL(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jdbc.pstmHelper("EXEC deleteNV ?", key);
     }
 
     @Override
     public List<NhanVien> loadDataFull() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dsNV = new ArrayList<>();
+        try {
+            ResultSet rs = jdbc.selectAll("Select * from NhanVien");
+            while (rs.next()) {
+                dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dsNV;
     }
 
     @Override
@@ -47,7 +56,16 @@ public class NhanVienDAO extends EduSysDAO<NhanVien, String> {
 
     @Override
     public List<NhanVien> loadDataKey(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            dsNV = new ArrayList<>();
+            ResultSet rs = jdbc.selectByID("select * from NHANVIEN where MANV = ?", key);
+            while (rs.next()) {
+                dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), "", rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return dsNV;
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class IfrmQLNguoiHoc extends javax.swing.JInternalFrame {
+public class IfrmNguoiHoc extends javax.swing.JInternalFrame {
 
     //Khai báo biến
     int ind = 0;
@@ -25,7 +25,7 @@ public class IfrmQLNguoiHoc extends javax.swing.JInternalFrame {
     DAONguoiHoc daoNH = new DAONguoiHoc();
     List<NguoiHoc> dsNH = new ArrayList<>();
 
-    public IfrmQLNguoiHoc(String maNVien) throws ParseException {
+    public IfrmNguoiHoc(String maNVien) throws ParseException {
         initComponents();
         maNV = maNVien;
         designJatbel();

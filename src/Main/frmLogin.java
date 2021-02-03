@@ -163,8 +163,7 @@ public class frmLogin extends javax.swing.JFrame {
             NhanVien nv = new NhanVien(txtUser.getText(), txtPass.getText(), "", true);
             if (daoNV.loadDataID(nv).size() != 0) {
                 Vaitro = daoNV.loadDataID(nv).get(0).isVaiTro();
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                frmMain fC = new frmMain(txtUser.getText());
+                frmMain fC = new frmMain(txtUser.getText(), Vaitro);
                 fC.setVisible(true);
                 this.dispose();
             } else {

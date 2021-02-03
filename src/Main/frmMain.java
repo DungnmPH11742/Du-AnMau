@@ -1,7 +1,9 @@
 package Main;
 
+import Client.IfrmKhoaHoc;
 import Client.IfrmQLChuyenDe;
-import Client.IfrmQLNguoiHoc;
+import Client.IfrmNguoiHoc;
+import Client.IfrmNhanVien;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -10,17 +12,20 @@ import java.util.Date;
 import javax.swing.Timer;
 
 public class frmMain extends javax.swing.JFrame {
+
     String maNV;
+    boolean vaiTro = false;
     Timer t;
-    public frmMain(String maNVien) throws ParseException {
+
+    public frmMain(String maNVien, boolean vTro) throws ParseException {
         initComponents();
         timeNow();
+        vaiTro = vTro;
         maNV = maNVien;
         setLocationRelativeTo(null);
         openNguoiHoc();
     }
-    
-    
+
     //Phương thức thời gian
     public void timeNow() {
         t = new Timer(1000, new ActionListener() {
@@ -41,7 +46,7 @@ public class frmMain extends javax.swing.JFrame {
 
     //Phương thức mở form Người Học
     void openNguoiHoc() throws ParseException {
-        IfrmQLNguoiHoc qlNH = new IfrmQLNguoiHoc(maNV);
+        IfrmNguoiHoc qlNH = new IfrmNguoiHoc(maNV);
         dspMain.removeAll();
         dspMain.add(qlNH);
         qlNH.setLocation(-3, -25);
@@ -56,6 +61,26 @@ public class frmMain extends javax.swing.JFrame {
         qlCD.setLocation(-3, -25);
         qlCD.setVisible(true);
     }
+
+    //Phương thức mở form Khóa học
+    void openQLKH() {
+        IfrmKhoaHoc qlKH = new IfrmKhoaHoc(maNV);
+        dspMain.removeAll();
+        dspMain.add(qlKH);
+        qlKH.setLocation(-3, -25);
+        qlKH.setVisible(true);
+    }
+
+    //Phương thức mở form Khóa học
+    void openQLNV() {
+        IfrmNhanVien qlKH = new IfrmNhanVien(maNV, vaiTro);
+        dspMain.removeAll();
+        dspMain.add(qlKH);
+        qlKH.setLocation(-3, -25);
+        qlKH.setVisible(true);
+    }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -161,6 +186,11 @@ public class frmMain extends javax.swing.JFrame {
         jButton5.setMinimumSize(new java.awt.Dimension(50, 50));
         jButton5.setPreferredSize(new java.awt.Dimension(50, 50));
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
         jToolBar1.add(jSeparator2);
 
@@ -306,7 +336,7 @@ public class frmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        openQLNV();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void nmiCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmiCDActionPerformed
@@ -314,12 +344,16 @@ public class frmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_nmiCDActionPerformed
 
     private void nmiNHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmiNHActionPerformed
-         try {
+        try {
             openNguoiHoc();
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_nmiNHActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        openQLKH();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,7 +383,6 @@ public class frmMain extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
