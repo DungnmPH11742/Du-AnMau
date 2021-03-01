@@ -84,6 +84,11 @@ public class KhoaHoc {
     public void setNgayTao(String ngayTao) {
         this.ngayTao = ngayTao;
     }
+
+    @Override
+    public String toString() {
+        return  maCD + " (" + ngayTao + ')';
+    }
     
     
     

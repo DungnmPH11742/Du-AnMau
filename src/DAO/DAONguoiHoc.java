@@ -20,8 +20,8 @@ public class DAONguoiHoc extends EduSysDAO<NguoiHoc, String> {
 
     @Override
     public void updateCSDL(NguoiHoc entity) {
-        jdbc.pstmHelper("Update NguoiHoc set hoTen = ?, NgaySinh = ?, gioiTinh = ?, dienThoai = ?, email = ?, ghiChu = ? where maNH = ?",
-                entity.getHoTen(), entity.getNgaySinh(), entity.isGioiTinh(), entity.getDienThoai(), entity.getEmail(), entity.getGhiChu(), entity.getMaNH());
+        jdbc.pstmHelper("Update NguoiHoc set hoTen = ?, NgaySinh = ?, gioiTinh = ?, dienThoai = ?, email = ?, ghiChu = ?, maNV = ? where maNH = ?",
+                entity.getHoTen(), entity.getNgaySinh(), entity.isGioiTinh(), entity.getDienThoai(), entity.getEmail(), entity.getGhiChu(), entity.getMaNV(), entity.getMaNH());
     }
 
     @Override
@@ -83,6 +83,29 @@ public class DAONguoiHoc extends EduSysDAO<NguoiHoc, String> {
         dsNH = new ArrayList<>();
         try {
             rs = jdbc.selectByID("Select * from NguoiHoc where hoTen like ?", "%" + key + "%");
+            while (rs.next()) {
+                NguoiHoc nh = new NguoiHoc();
+                nh.setMaNH(rs.getString(1));
+                nh.setHoTen(rs.getString(2));
+                nh.setNgaySinh(rs.getString(3));
+                nh.setGioiTinh(rs.getBoolean(4));
+                nh.setDienThoai(rs.getString(5));
+                nh.setEmail(rs.getString(6));
+                nh.setGhiChu(rs.getString(7));
+                nh.setMaNV(rs.getString(8));
+                nh.setNgayDK(rs.getString(9));
+                dsNH.add(nh);
+            }
+        } catch (Exception e) {
+        }
+        return dsNH;
+    }
+
+    public List<NguoiHoc> loadDataNotHV(String keyW, String key) {
+        ResultSet rs = null;
+        dsNH = new ArrayList<>();
+        try {
+            rs = jdbc.selectByID("Select * from NguoiHoc where hoTen like ? and maNH not in (Select maNH from HocVien where MaKH = ?)", "%" + keyW + "%", key);
             while (rs.next()) {
                 NguoiHoc nh = new NguoiHoc();
                 nh.setMaNH(rs.getString(1));

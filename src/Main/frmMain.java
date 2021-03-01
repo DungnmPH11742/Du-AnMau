@@ -1,11 +1,14 @@
 package Main;
 
+import Client.IfrmHocVien;
 import Client.IfrmKhoaHoc;
 import Client.IfrmQLChuyenDe;
 import Client.IfrmNguoiHoc;
 import Client.IfrmNhanVien;
+import Client.ThongKeJFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,11 +19,13 @@ public class frmMain extends javax.swing.JFrame {
     String maNV;
     boolean vaiTro = false;
     Timer t;
+    Connection con;
 
     public frmMain(String maNVien, boolean vTro) throws ParseException {
         initComponents();
         timeNow();
         vaiTro = vTro;
+        con = new JDBCHelper.ConnectHelper().Connected();
         maNV = maNVien;
         setLocationRelativeTo(null);
         openNguoiHoc();
@@ -79,6 +84,24 @@ public class frmMain extends javax.swing.JFrame {
         qlKH.setLocation(-3, -25);
         qlKH.setVisible(true);
     }
+
+    //Phương thức mở form học Viên
+    void openQLHV() {
+        IfrmHocVien qlHV = new IfrmHocVien();
+        dspMain.removeAll();
+        dspMain.add(qlHV);
+        qlHV.setLocation(-3, -25);
+        qlHV.setVisible(true);
+    }
+    
+    void openTK() {
+        ThongKeJFrame qlHV = new ThongKeJFrame(con, vaiTro, maNV);
+        dspMain.removeAll();
+        dspMain.add(qlHV);
+        qlHV.setLocation(-3, -25);
+        qlHV.setVisible(true);
+    }
+    
     
     
 
@@ -109,6 +132,7 @@ public class frmMain extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -278,6 +302,11 @@ public class frmMain extends javax.swing.JFrame {
 
         nmiHV.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
         nmiHV.setText("Học Viên");
+        nmiHV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nmiHVActionPerformed(evt);
+            }
+        });
         mnuQL.add(nmiHV);
         mnuQL.add(jSeparator3);
 
@@ -294,6 +323,15 @@ public class frmMain extends javax.swing.JFrame {
 
         jMenu3.setText("Thống kê");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Trợ giúp");
@@ -355,6 +393,14 @@ public class frmMain extends javax.swing.JFrame {
         openQLKH();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void nmiHVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmiHVActionPerformed
+        openQLHV();
+    }//GEN-LAST:event_nmiHVActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        openTK();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -398,6 +444,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar.Separator jSeparator1;

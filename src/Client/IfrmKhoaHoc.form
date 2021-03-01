@@ -494,7 +494,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="CHUY&#xca;N &#x110;&#x1ec0;"/>
+        <Property name="text" type="java.lang.String" value="KH&#xd3;A H&#x1ecc;C"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">

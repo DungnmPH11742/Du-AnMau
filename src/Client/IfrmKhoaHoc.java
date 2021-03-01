@@ -483,7 +483,7 @@ public class IfrmKhoaHoc extends javax.swing.JInternalFrame {
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("CHUYÊN ĐỀ");
+        jLabel1.setText("KHÓA HỌC");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 

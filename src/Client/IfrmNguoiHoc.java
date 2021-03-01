@@ -177,6 +177,7 @@ public class IfrmNguoiHoc extends javax.swing.JInternalFrame {
         nh.setDienThoai(txtDienThoai.getText().trim());
         nh.setEmail(txtEmail.getText().trim());
         nh.setGhiChu(txtGhiChu.getText().trim());
+        nh.setMaNV(maNV);
         nh.setMaNH(txtMaNH.getText().trim());
         daoNH.updateCSDL(nh);
         JOptionPane.showMessageDialog(this, "Cập nhật thành công");
